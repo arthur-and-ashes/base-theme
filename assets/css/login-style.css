@@ -1,0 +1,129 @@
+body.login {
+	background-color: #FFF;
+  background-image: url('');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+#login {
+	background-color: #FFF;
+	box-shadow: 0px 0px 2px 1px #aaa;
+    margin: auto;
+    padding: 2%;
+    width: 320px;
+}
+.login #login h1 a {
+	background-size: 30%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 900;
+    margin: 30px 0 0;
+    width: 100%;
+    height: 100px;
+    font-size: 18px;
+}
+
+.login #login form {
+	position: relative;
+	border: 0px;
+	height: 25%;
+	overflow-y: invisible;
+	}
+.login input[type="text"],.login input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #AAA;
+	background-color: #F0F0F0;
+	width: 100%;
+    box-shadow: 0 1px 2px 0px #AAA inset;
+		-webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        -ms-transition: all 1s;
+        -o-transition: all 1s;
+        transition: all 1s;	
+}
+.login  input:focus[type="text"], .login input:focus[type="password"] { 
+        cursor: auto;
+		border-bottom-color: #f1d9ad;
+    box-shadow: 0 1px 2px 0px #404040 inset;
+		box-shadow: 0 2px 3px 0px #AAA inset; 
+}
+.login .message {
+    border-left: 4px solid #404040;
+    box-shadow: 0px 1px 2px 0 #AAA;
+	}
+.login input[type="submit"] {
+        background-color: #222;
+	border: 0;
+	max-width: 100%;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: #fff;
+	white-space: normal;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	font-size: 0.875rem;
+	font-weight: 800;
+	line-height: 1;
+	padding: 1em 2em;
+	text-shadow: none;
+	-webkit-transition: background 0.2s;
+	transition: background 0.2s;
+}
+
+.login input[type="submit"]:hover { 
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-transition: border-radius .1s linear;
+	-moz-transition: border-radius .1s linear;
+	-ms-transition: border-radius .1s linear;
+	-o-transition: border-radius .1s linear;
+	transition: border-radius .1s linear;
+}
+.login input[type="submit"]:active {
+	-webkit-box-shadow: inset 2px 2px 4px 0 #000;
+	-moz-box-shadow: inset 2px 2px 4px 0 #000;
+	box-shadow: inset 2px 2px 4px 0 #000;
+	background-color: #2b942b;
+}
+/* Styles des liens */
+.login #backtoblog, .login #nav {
+    font-size: 15px;
+    margin: 10px 0;
+    padding: 0;
+    text-align: center;
+}
+#nav a, #backtoblog a {
+	background: none;
+	color: #424242; 
+}
+.wp-social-login-widget {
+	text-align: center;
+}
+
+/* Maximum width of 1100 pixels. */
+@media screen and (max-width: 1100px) {
+body.login, html {
+	background-image: none;
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	}
+	.login #login form, form {
+		margin: 2%;
+		overflow-y: visible ;
+		max-height: none;
+	}
+}
+/* Maximum width of 500 pixels. */
+@media screen and (max-width: 440px) {
+	#login {
+		margin: 2%;
+		width: 92%;
+	}
+	.login h1 a {
+	 width: 100%;
+	 }
+ }
