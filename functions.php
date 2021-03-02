@@ -18,7 +18,6 @@
 	add_theme_support( 'post-thumbnails' );
 	add_image_size( 'base-thumbnail-avatar', 100, 100, true );
 	add_image_size( 'actu-grid', 400, 200, true );  /* Taille pour le blog */
-	add_image_size( 'base-featured-image', 2000, 1200, true );
 
 	// Set the default content width.
 	$GLOBALS['content_width'] = 900;
@@ -129,6 +128,18 @@ function twentyseventeen_widgets_init() {
 }
 add_action( 'widgets_init', 'twentyseventeen_widgets_init' );
 
+// Disable the emoji's
+function disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );	
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );	
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+}
+add_action( 'init', 'disable_emojis' );
 
 // Adds a simple Theme Info page to the Appearance section of the WordPress Dashboard.
 include('base-theme-info-page.php');
@@ -173,8 +184,8 @@ add_filter( 'login_headertitle', 'my_login_logo_url_title' );
 // Specific functions for this store theme
 
 // disable gutenberg
-add_filter('use_block_editor_for_post', '__return_false', 10);
-add_filter('use_block_editor_for_post_type', '__return_false', 10);
+/* add_filter('use_block_editor_for_post', '__return_false', 10);
+add_filter('use_block_editor_for_post_type', '__return_false', 10); */
 
 // manage supports for posts
 add_action('init', 'post_supports');
@@ -231,171 +242,7 @@ function page_details($post){
 		echo '<h3>Second bouton</h3>';
   	echo '<span>Texte : </span><input id="bouton-2" type="text" style="width:400px;max-width:100%;display:inline-block;" name="page_banner[cta2-text]" value="'.$page_banner["cta2-text"].'" ><br>';
 	  	echo '<span>Lien : </span><input id="bouton-2" type="url" style="width:400px;max-width:100%;display:inline-block;" name="page_banner[cta2-link]" value="'.$page_banner["cta2-link"].'" ><br><br><hr>';
-	
-	echo '<h3>Ajouter une notification sur cette page :</h3>';
-  	$page_notif = get_post_meta($post->ID,'_page_notif',true);
-  echo '<label for="mf-description" style="font-weight:bold;">Description longue, informations supplémentaires, critiques... : </label>';
-	$settings = array('editor_height' => '120', );
-  wp_editor( $page_notif, 'page-notif', $settings);
 
-	$front_page_id = (int) get_option( 'page_on_front' );
-	$front_page_id_translation = (int) pll_get_post($front_page_id);
-	if ( $post->ID == $front_page_id || $post->ID == $front_page_id_translation ) {
-		
-		$main_slider_images = get_post_meta(get_the_ID(), '_main_slider_images', true);
-		echo '<h3>Images du slider principal</h3>
-		<input class="slider-one" type="text" name="slider_images[]" value="'.$main_slider_images[0].'" />
-		<input class="upload-slider-one" type="button" class="button" value="Charger une image" /><br>
-			
-		<input class="slider-two" type="text" name="slider_images[]" value="'.$main_slider_images[1].'" />
-		<input class="upload-slider-two" type="button" class="button" value="Charger une image" /><br>
-		
-		<input class="slider-three" type="text" name="slider_images[]" value="'.$main_slider_images[2].'" />
-		<input class="upload-slider-three" type="button" class="button" value="Charger une image" /><br>
-		
-		<input class="slider-four" type="text" name="slider_images[]" value="'.$main_slider_images[3].'" />
-		<input class="upload-slider-four" type="button" class="button" value="Charger une image" /><br>';
-		
-		print_r($main_slider_images);
-
-		
-		echo '<h3>Avis clients (pour la page d\'accueil)</h3>';
-		$corporate_reviews = get_post_meta($post->ID,'_corporate_reviews',true);
-		wp_enqueue_media(); 
-		echo '<div style="background:#eee;">
-			<label for="logo-url">Sélectionner une photo (format carré ~ 200px de largeur) :</label><br>
-			<input class="image-one" type="text" name="review[0][reviewer_face]" value="'.$corporate_reviews[0][reviewer_face].'" />
-			<input class="upload-one" type="button" class="button" value="Charger une image" /><br>
-			<textarea name="review[0][comment]" style="width:100%;">'.$corporate_reviews[0][comment].'</textarea><br>
-		</div><br>';
-		echo '<div style="background:#eee;">
-			<label for="logo-url">Sélectionner une photo (format carré ~ 200px de largeur) :</label><br>
-			<input class="image-two" type="text" name="review[1][reviewer_face]" value="'.$corporate_reviews[1][reviewer_face].'" />
-			<input class="upload-two" type="button" class="button" value="Charger une image" /><br>
-			<textarea name="review[1][comment]" style="width:100%;">'.$corporate_reviews[1][comment].'</textarea><br>
-		</div><br>';
-		echo '<div style="background:#eee;">
-			<label for="logo-url">Sélectionner une photo (format carré ~ 200px de largeur) :</label><br>
-			<input class="image-three" type="text" name="review[2][reviewer_face]" value="'.$corporate_reviews[2][reviewer_face].'" />
-			<input class="upload-three" type="button" class="button" value="Charger une image" /><br>
-			<textarea name="review[2][comment]" style="width:100%;">'.$corporate_reviews[2][comment].'</textarea><br>
-		</div><br>';
-		echo '<div style="background:#eee;">
-			<label for="logo-url">Sélectionner une photo (format carré ~ 200px de largeur) :</label><br>
-			<input class="image-four" type="text" name="review[3][reviewer_face]" value="'.$corporate_reviews[3][reviewer_face].'" />
-			<input class="upload-four" type="button" class="button" value="Charger une image" /><br>
-			<textarea name="review[3][comment]" style="width:100%;">'.$corporate_reviews[3][comment].'</textarea><br>
-		</div><br>';
-	?>
-	
-	<script type='text/javascript'>
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-one').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.image-one').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-two').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.image-two').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-three').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.image-three').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-four').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.image-four').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-slider-one').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.slider-one').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-slider-two').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.slider-two').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-slider-three').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.slider-three').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-		jQuery(document).ready(function($){
-		  var mediaUploader;
-			$('.upload-slider-four').click(function(e) {
-				e.preventDefault();
-				if (mediaUploader) { mediaUploader.open(); return; }
-				mediaUploader = wp.media.frames.file_frame = wp.media({ multiple: false });
-				mediaUploader.on('select', function() {
-					attachment = mediaUploader.state().get('selection').first().toJSON();
-					$('.slider-four').val(attachment.url);
-				});
-				mediaUploader.open();
-			});
-		});
-	</script>	
-
-<?php }
 }
 
 add_action('save_post','save_page_details');

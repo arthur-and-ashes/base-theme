@@ -42,6 +42,7 @@
 						<?php if(get_option('my-custom-logo')) { ?>
 						<img class="logo_white" width="120" src="<?php echo get_option('my-custom-logo-white'); ?>" alt="Logo">
 						<img class="logo" width="120" src="<?php echo get_option('my-custom-logo'); ?>" alt="Logo">
+						<span class="site-name"><?php echo get_bloginfo( 'name' ); ?></span>
 						<?php } else { 
 							echo '<span class="site-name">'.get_bloginfo( 'name' ).'</span>';
 						} ?>
@@ -61,7 +62,7 @@
 							<?php if ( class_exists( 'WooCommerce' ) ) { echo WC()->cart->get_cart_contents_count(); } ?>
 						</span>
 					</div>
-					<?php } else { ?>
+					<?php } else if(get_option( 'users_can_register') ) { ?>
 					<div class="fas header-profile open-magic"></div>
 					<?php } ?>
 					
@@ -83,7 +84,7 @@
 		</header>
 		
 		<div id="bar-menu">
-			<span class="fa fa-arrow-circle-left open-magic"></span>
+			<span class="fas fa-arrow-circle-left open-magic"></span>
 			<?php if ( class_exists( 'WooCommerce' ) ) { ?>
 				<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Consultez votre panier', 'base-theme' ); ?>"><?php echo sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?> – <?php echo WC()->cart->get_cart_total(); ?></a>
 			<hr>
