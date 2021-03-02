@@ -64,23 +64,49 @@ get_header(); ?>
 
 		<main id="main" class="site-main" role="main">
       
-			<?php
-
-				while ( have_posts() ) : the_post();
+			<?php while ( have_posts() ) : the_post();
 
 				the_content();
 
 				// If comments are open or we have at least one comment, load up the comment template.
 
-				if ( comments_open() || get_comments_number() ) :
-
-					comments_template();
-
-				endif;
-
-			endwhile; // End of the loop.
-
-			?>
+			endwhile; ?>
+			
+			<?php // get the last articles
+			$marks = get_posts(array(
+				"post_type" => "post",
+				'numberposts' => 2,
+				'orderby'          => 'date',
+				'order'            => 'DESC',
+				"offset" => 0,
+			)); 
+			if( $marks ) : ?>
+				<h2 class="aligncenter"><?php _e( 'Nos dernières actualités', 'k19-store' ); ?></h2>
+				<section id="grid-container" class="transitions-enabled fluid masonry js-masonry grid">
+					<?php foreach($marks as $mark) : ?>
+					<article id="post-<?php $mark->ID; ?>" <?php post_class('post'); ?>>
+						<space <?php if(!empty($banner = get_the_post_thumbnail_url( $mark->ID, 'actu-grid' ))) { 
+								echo 'style="background-image: url('.$banner.');" "';			 
+								} else { echo 'class="standard-image"'; } ?> >
+						</space> 
+						<div class="post-subtitle">
+							<a href="<?php echo get_permalink($mark->ID); ?>">
+								<h3><?= $mark->post_title ?></h3>
+							</a>
+						</div>
+						<div class="post-description">
+							<p>
+								<?php if ( !empty( $mark->post_excerpt ) ) {
+									echo wp_trim_words($mark->post_excerpt, 25);
+								} else {
+									echo wp_trim_words( $mark->post_content, 25);
+								} ?>
+							</p>
+						</div>
+				</article>
+				<?php endforeach; ?>
+			</section>
+			<?php endif; ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
