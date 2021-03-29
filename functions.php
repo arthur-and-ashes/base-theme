@@ -307,13 +307,11 @@ function remove_custom_meta_form() {
     remove_meta_box( 'postcustom', 'post', 'normal' );
     remove_meta_box( 'commentstatusdiv', 'post', 'normal' );
     remove_meta_box( 'commentsdiv', 'post', 'normal' );
-    remove_meta_box( 'slugdiv', 'post', 'normal' );
     remove_meta_box( 'authordiv', 'post', 'normal' );
 
 	remove_meta_box( 'postcustom', 'page', 'normal' );
 	remove_meta_box( 'commentstatusdiv', 'page', 'normal' );
 	remove_meta_box( 'commentsdiv', 'page', 'normal' );
-	remove_meta_box( 'slugdiv', 'page', 'normal' );
 	remove_meta_box( 'authordiv', 'page', 'normal' );
 }
 add_action( 'admin_menu' , 'remove_custom_meta_form' );
