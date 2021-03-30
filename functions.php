@@ -179,9 +179,7 @@ add_filter( 'login_headertitle', 'my_login_logo_url_title' );
 
 
 
-
-
-// Specific functions for this store theme
+// Specific functions for this theme
 
 // disable gutenberg
 /* add_filter('use_block_editor_for_post', '__return_false', 10);
@@ -191,7 +189,6 @@ add_filter('use_block_editor_for_post_type', '__return_false', 10); */
 add_action('init', 'post_supports');
 function post_supports() {
     add_post_type_support( 'post', array('excerpt') );
-    remove_post_type_support( 'post', array('slug') );
 }
 
 function change_post_menu_label() {
@@ -302,19 +299,6 @@ function my_header_add_to_cart_fragment( $fragments ) {
     return $fragments;
 }
  add_filter( 'woocommerce_add_to_cart_fragments', 'my_header_add_to_cart_fragment' );
-
-function remove_custom_meta_form() {
-    remove_meta_box( 'postcustom', 'post', 'normal' );
-    remove_meta_box( 'commentstatusdiv', 'post', 'normal' );
-    remove_meta_box( 'commentsdiv', 'post', 'normal' );
-    remove_meta_box( 'authordiv', 'post', 'normal' );
-
-	remove_meta_box( 'postcustom', 'page', 'normal' );
-	remove_meta_box( 'commentstatusdiv', 'page', 'normal' );
-	remove_meta_box( 'commentsdiv', 'page', 'normal' );
-	remove_meta_box( 'authordiv', 'page', 'normal' );
-}
-add_action( 'admin_menu' , 'remove_custom_meta_form' );
 
 // Woocommerce Remove related products output
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
