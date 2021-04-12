@@ -276,21 +276,22 @@ function mycustomthemestyle(){ ?>
 	<style>
 		body,button,input,select,textarea {font-family:<?php echo get_option('font-select'); ?>; }
 		h2, h3, h4, h5, h6 {font-family:<?php echo get_option('titlefont-select'); ?>; }
-		.mainbanner, .over-page { background-image: url("<?php echo get_option('my-banner'); ?>"); }
 		
-		<?php  $mycolors = get_option( 'my-colors' ); ?>
-		a.highlight, ul.my-social-menu li a:hover i, .grid article h3, .nav-previous a:before, .nav-next a:after {
-			color:<?php if (!empty($mycolors['color-one'])) { echo $mycolors['color-one']; } else { echo '#45d58c'; } ?> !important;
-		}
-		hr, button, input[type="button"], input[type="submit"], .woocommerce-mini-cart a.button, .header-panier span.count, .woocommerce-account .addresses .title .edit, .woocommerce-info::before, .woocommerce-message::before, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt, a.button.checkout.wc-forward, .header-menu a:after, .site-footer {
-			background-color:<?php if (!empty($mycolors['color-one'])) { echo $mycolors['color-one']; } else { echo '#45d58c'; } ?> !important;
-		}
-		::selection, ::-moz-selection {
-			background-color:<?php if (!empty($mycolors['color-one'])) { echo $mycolors['color-one']; } else { echo '#45d58c'; } ?> !important;
-		}
-		input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus,input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus,input[type="range"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="week"]:focus, input[type="time"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="color"]:focus, textarea:focus, .header-menu .menu-item ul.sub-menu li, li.woocommerce-MyAccount-navigation-link:hover, li.woocommerce-MyAccount-navigation-link.is-active, .woocommerce-info, .woocommerce-message, .woocommerce-info, .woocommerce-message, .burger span, .header-menu, .header-menu li, button.cta1, button.cta1:hover {
-			border-color:<?php if (!empty($mycolors['color-one'])) { echo $mycolors['color-one']; } else { echo '#45d58c'; } ?> !important;
-		}
+		<?php  $mycolors = get_option( 'my-colors' );
+		if (!empty($mycolors['color-one'])) { $colorone = $mycolors['color-one']; } else { $colorone = 'green'; }
+		if (!empty($mycolors['color-two'])) { $colortwo = $mycolors['color-two']; } else { $colortwo = 'blue'; }
+		?>
+		a.highlight, ul.my-social-menu li a:hover i, .grid article h3, .nav-previous a:before, .nav-next a:after{ color:<?php echo $colorone;?> !important; }
+		hr, .header-panier span.count, .woocommerce-account .addresses .title .edit, .woocommerce-info::before, .woocommerce-message::before { background-color: <?php echo $colorone; ?> !important; }
+		::selection, ::-moz-selection {	background-color:<?php echo $colorone; ?> !important; }
+		input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus,input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus,input[type="range"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="week"]:focus, input[type="time"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="color"]:focus, textarea:focus, .header-menu .menu-item ul.sub-menu li, li.woocommerce-MyAccount-navigation-link:hover, li.woocommerce-MyAccount-navigation-link.is-active, .woocommerce-info, .woocommerce-message, .woocommerce-info, .woocommerce-message, .burger span, .header-menu li, button.cta1:hover, .header-menu .menu-item ul.sub-menu li, .header-menu .menu-item ul.sub-menu, .header-menu .menu-item:hover ul.sub-menu { border-color:<?php echo $colorone; ?> !important; }
+		.vague-1, vague-2 {color:<?php echo $colorone; ?>;}
+		
+		.woocommerce #respond input#submit.alt:hover, .woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover {background-color:<?php echo $colortwo; ?> !important; }
+		button.cta2 {border-color:<?php echo $colortwo; ?>;}
+		h2, button.cta2, .vague-3 {color:<?php echo $colortwo; ?>;}
+		.header-menu a:after { background-color: <?php echo $colortwo; ?>; }
+		.site-footer {background: linear-gradient(140deg,<?php echo $colorone; ?>,<?php echo $colortwo; ?>); }
 	</style>
 <?php }
 add_action('wp_head', 'mycustomthemestyle'); 
